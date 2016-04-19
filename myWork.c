@@ -1,3 +1,4 @@
+//Turning light on and off 5 times
 int main(){
  
     InitHardware();
@@ -11,7 +12,7 @@ int main(){
     }
     return 0;
 }
-
+//Turning light on when close to sensor
 #include <stdio.h>
 #include <time.h>
 
@@ -37,6 +38,7 @@ int main(){
     }
     return 0;
 }
+//Making motor turn
 #include <stdio.h>
 #include <time.h>
 
@@ -65,6 +67,7 @@ int main(){
     }
     return 0;
 }
+//Making motor respond to sensor
 #include <stdio.h>
 #include <time.h>
 
@@ -92,3 +95,119 @@ int main(){
     return 0;
 }
 
+//Reading from 3 sensors
+int main(){
+    InitHardware();
+
+    int adc_reading;
+    adc_reading = ReadAnalog(0);
+    printf("%d\n", adc_reading);
+    Sleep(1, 000000);
+
+    adc_reading = ReadAnalog(2);
+    printf("%d\n", adc_reading);
+    Sleep(1, 000000);
+
+    adc_reading = ReadAnalog(4);
+    printf("%d\n", adc_reading);
+    Sleep(1, 000000);
+
+return 0;
+}
+//Getting 5 readings
+extern "C" int InitHardware();
+extern "C" int ReadAnalog(int ch_adc);
+extern "C" int Sleep(int sec, int usec);
+
+int main(){
+    InitHardware();
+    int sensorloop = 5;
+    int sensorloopEnd = sensorloop;
+
+    int avgTotal = 0;
+
+    while(sensorloop > 0){
+        int adc_reading = ReadAnalog(0);
+        printf("%d\n", adc_reading);
+        avgTotal = avgTotal + adc_reading;
+        Sleep(1,0);
+        sensorloop = sensorloop-1;
+
+    }
+
+
+    int adcReadingAvg = avgTotal/sensorloopEnd;
+    printf("%d\n", adcReadingAvg);
+return 0;}
+#include <stdio.h>
+#include <time.h>
+
+//Get half range
+extern "C" int InitHardware();
+extern "C" int ReadAnalog(int ch_adc);
+extern "C" int Sleep(int sec, int usec);
+
+int main(){
+    InitHardware();
+    int sensorloop = 5;
+    int sensorloopEnd = sensorloop;
+
+    int avgTotal = 0;
+
+    int max = 0;
+    int min = 1023;
+
+    while(sensorloop > 0){
+        int adR = ReadAnalog(0);
+        if(adR > max){
+        max = adR;
+        }
+        if(adR < min){
+        min = adR;
+        }
+        printf("%d\n", adR);
+        avgTotal = avgTotal + adR;
+        Sleep(1,0);
+        sensorloop = sensorloop-1;
+
+    }
+
+
+    int adcReadingAvg = avgTotal/sensorloopEnd;
+    int halfrange = (max - min)/2;
+    printf("Average reading = %d\n", adcReadingAvg);
+    printf("Half range = %d\n", halfrange);
+return 0;}
+//Array for storing values
+#include <stdio.h>
+#include <time.h>
+
+
+extern "C" int InitHardware();
+extern "C" int ReadAnalog(int ch_adc);
+extern "C" int Sleep(int sec, int usec);
+
+int main(){
+    InitHardware();
+    int sensorloop = 20;
+
+    int values [20] = {};
+    int count = 0;
+
+    while(sensorloop > 0){
+        int adR = ReadAnalog(0);
+
+        for(i=0;i< 1;i++){
+        adR>>values[i];
+        }
+
+        values[] = adR;
+
+        printf("%d\n", values[count]);
+        Sleep(1,0);
+        sensorloop = sensorloop-1;
+
+    }
+
+    printf("20 values = %d\n", values);
+return 0;}
