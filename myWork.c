@@ -192,16 +192,12 @@ int main(){
     int sensorloop = 20;
 
     int values [20] = {};
-    int count = 0;
-
-    while(sensorloop > 0){
+    int i;
+    
+        for(i=0;i< 20;i++){
         int adR = ReadAnalog(0);
-
-        for(i=0;i< 1;i++){
-        adR>>values[i];
+        values[i] = values + adR;
         }
-
-        values[] = adR;
 
         printf("%d\n", values[count]);
         Sleep(1,0);
